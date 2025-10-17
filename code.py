@@ -1,7 +1,9 @@
-from fastapi import FastAPI
+import os
+import stripe
 
-app = FastAPI()
+stripe.api_key = os.getenv("STRIPQE_SECRET")
 
-@app.get("/hello-dinosaurs")
-async def hello_dinosaurs:():
-    return {"message": "Hello, dinosaurs!"}
+products = stripe.Product.list(limit=10)
+
+for product in products.data:
+    print(product)
